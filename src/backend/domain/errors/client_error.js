@@ -1,9 +1,6 @@
 class ClientError extends Error {
-  code;
-  meta;
-
   constructor(message, code, meta) {
-    super(message);
+    super(`A client error occured with status code ${code} occured with the following message: ${message}`);
     this.code = code;
     this.meta = meta && meta;
   }
@@ -13,14 +10,10 @@ class ClientError extends Error {
       this.isTransient = true;
     }
   }
-
-  print() {
-    return `A client error occured with status code ${this.code} occured with the following message: ${this.message}`;
-  }
 }
 
 const newClientError = (message, code, meta = {}) => {
   return new ClientError(message, code, meta);
 };
 
-module.exports = { newClientError }
+module.exports = { newClientError };

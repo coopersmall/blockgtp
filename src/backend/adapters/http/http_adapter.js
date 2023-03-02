@@ -1,16 +1,14 @@
-const { Axios, AxiosError } = require("axios");
-const { newClientError, newServerError } = require("../../domain/errors");
+const { Axios, AxiosError } = require('axios');
+const { newClientError, newServerError } = require('../../domain/errors');
 
 class HTTPAdapter {
-  adapter;
-
   constructor() {
     this.adapter = new Axios();
   }
 
   async request(url, body, headers) {
     try {
-      response = await this.adapter.request({
+      let response = await this.adapter.request({
         url,
         body,
         headers,
@@ -24,7 +22,7 @@ class HTTPAdapter {
         }
         throw newServerError(e.message, e.status);
       }
-      throw new Error("");
+      throw new Error('');
     }
   }
 }
@@ -33,4 +31,4 @@ const newHTTPAdapter = () => {
   return new HTTPAdapter();
 };
 
-module.exports = { newHTTPAdapter }
+module.exports = { newHTTPAdapter };
