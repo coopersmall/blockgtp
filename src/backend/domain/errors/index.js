@@ -1,4 +1,4 @@
-const { newClientError } = require('./client_error');
-const { newServerError } = require('./server_error');
+import { newClientError } from './client_error';
+import { newServerError } from './server_error';
 
-module.exports = { newClientError, newServerError };
+export { newClientError, newServerError };

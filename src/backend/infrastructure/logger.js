@@ -1,8 +1,8 @@
-const { createLogger, format, transports } = require('winston');
+import { createLogger, format, transports } from 'winston';
 const { combine, timestamp, prettyPrint } = format;
 
 class Logger {
-  constructor(service, meta = {}) {
+  constructor(service, meta) {
     this._logger = createLogger({
       format: combine(timestamp(), prettyPrint()),
       defaultMeta: { service, ...meta },
@@ -27,8 +27,12 @@ class Logger {
   }
 }
 
-const newLogger = (service) => {
-  return new Logger(service);
-};
+const init = (service, meta = {}) => {
+  return new Logger(service, meta)
+}
 
-module.exports = { newLogger };
+const logger = {
+  init,
+}
+
+export { logger };

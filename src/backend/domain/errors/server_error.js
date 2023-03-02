@@ -10,4 +10,4 @@ const newServerError = (message, code, meta = {}) => {
   return new ServerError(message, code, meta);
 };
 
-module.exports = { newServerError };
+export { newServerError };

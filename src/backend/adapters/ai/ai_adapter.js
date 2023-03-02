@@ -1,43 +1,38 @@
-const { Configuration, OpenAIApi } = require('openai');
-const { newClientError, newServerError } = require('../../domain/errors');
+import { Configuration, OpenAIApi } from 'openai';
+import { newClientError, newServerError } from '../../domain/errors';
 
-class AIAdapter {
-  constructor(token = process.env.OPEN_AI_TOKEN) {
-    this.model = 'text-davinci-003';
+const DEFAULT_MODEL = 'text-davinci-003'
 
-    let config = Configuration({
-      apiKey: token,
-    });
-
-    this.api = OpenAIApi(config);
-  }
-
-  async request(prompt) {
-    try {
-      let response = await this.api.createCompletion({
-        model: this.model,
-        prompt,
-      });
-
-      if (!response.data) {
-        throw new Error('unable to send request to OpenAI');
-      }
-
-      return response.data;
-    } catch (e) {
-      if (e.response) {
-        if (e.response.status < 500) {
-          throw newClientError(e.message, e.response.status);
-        }
-        throw newServerError(e.message, e.response.status);
-      }
-      throw new Error(`request failed to send to OpenAI with the following error: ${e}`);
-    }
-  }
+const init = (token = process.env.OPEN_AI_TOKEN) => {
+  const config = Configuration({
+    apiKey: token,
+  })
+  return OpenAIApi(config)
 }
 
-const newAIAdapter = (token) => {
-  return new AIAdapter(token);
-};
+const request = async (prompt, model = DEFAULT_MODEL, adapter = init()) => {
+  adapter.createCompletion({
+    model,
+    prompt,
+  })
+  .then(response => {
+    return response.data
+  })
+  .catch(err => {
+    if (err.response) {
+      const message = err.message
+      const status = err.response.status
 
-module.exports = { newAIAdapter };
+      if (status >= 400 && status < 500) return Promise.reject(newClientError(message, status))
+      if (status > 500) return Promise.reject(newServerError(message, status))
+    }
+    return Promise.reject(err)
+  })
+}
+
+const aiAdapter = {
+  init,
+  request,
+}
+
+export { aiAdapter };

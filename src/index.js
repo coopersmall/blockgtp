@@ -1,5 +1,5 @@
-require('module-alias/register');
+import { config } from 'dotenv'
+import { init } from './backend';
 
-const { init } = require('@backend');
-
-init();
+config()
+init()

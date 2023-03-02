@@ -16,4 +16,4 @@ const newClientError = (message, code, meta = {}) => {
   return new ClientError(message, code, meta);
 };
 
-module.exports = { newClientError };
+export { newClientError };

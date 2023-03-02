@@ -1,6 +1,9 @@
-const configure = async (server) => {
-  server.PORT;
-  return process.env.PORT || 8000;
+const configure = (logger, server) => {
+  logger.info('Initializing HTTP server')
+  let httpServer = server.init()
+
+  logger.info('Starting HTTP server')
+  server.start(httpServer, logger)
 };
 
-module.exports = { configure };
+export { configure };

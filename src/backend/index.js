@@ -1,19 +1,10 @@
-const { server } = require('./server');
-const { configure } = require('./configure');
-const { newLogger } = require('./infrastructure/logger');
+import { server } from './adapters/http_server/server';
+import { configure } from './configure';
+import { logger } from './infrastructure/logger';
 
 const init = () => {
-  const logger = newLogger('backend');
-
-  configure(server)
-    .then((port) => {
-      server.listen(port, () => {
-        logger.info(`Listening on port ${port}`);
-      });
-    })
-    .catch((err) => {
-      logger.error(err);
-    });
+  const backendLogger = logger.init('backend');
+  configure(backendLogger, server)
 };
 
-module.exports = { init };
+export { init };
