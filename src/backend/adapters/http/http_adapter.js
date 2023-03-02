@@ -29,6 +29,8 @@ class HTTPAdapter {
   }
 }
 
-export const newHTTPAdapter = () => {
+const newHTTPAdapter = () => {
   return new HTTPAdapter();
 };
+
+module.exports = { newHTTPAdapter }

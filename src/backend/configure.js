@@ -1,3 +1,5 @@
-export const configure = (app) => {
-  return app;
+const configure = async (server) => {
+  return process.env.PORT || 8000;
 };
+
+module.exports = { configure }

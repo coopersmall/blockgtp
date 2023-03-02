@@ -47,6 +47,8 @@ class AIAdapter {
   }
 }
 
-export const newAIAdapter = (token) => {
+const newAIAdapter = (token) => {
   return new AIAdapter(token);
 };
+
+module.exports = { newAIAdapter }

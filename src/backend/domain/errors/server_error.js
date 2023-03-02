@@ -13,6 +13,8 @@ class ServerError extends Error {
   }
 }
 
-export const newServerError = (message, code, meta = {}) => {
+const newServerError = (message, code, meta = {}) => {
   return new ServerError(message, code, meta);
 };
+
+module.exports = { newServerError }

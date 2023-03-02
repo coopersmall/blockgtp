@@ -19,6 +19,8 @@ class ClientError extends Error {
   }
 }
 
-export const newClientError = (message, code, meta = {}) => {
+const newClientError = (message, code, meta = {}) => {
   return new ClientError(message, code, meta);
 };
+
+module.exports = { newClientError }

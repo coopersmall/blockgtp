@@ -1,11 +1,17 @@
-const {} = require("express");
+const { server } = require("./server")
 const { configure } = require("./configure");
+const { newLogger } = require("./infrastructure/logger")
 
 const init = () => {
-  app = {};
-  try {
-    configure(app);
-  } catch (e) {
-    console.log(`failed to start app: ${e.message}`);
-  }
+  logger = newLogger('backend')
+
+  configure(server).then(port => {
+    server.listen(port, () => {
+      logger.info(`Listening on port ${port}`)
+    })
+  }).catch(err => {
+    logger.error(err)
+  })
 };
+
+module.exports = { init }
