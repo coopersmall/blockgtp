@@ -28,11 +28,11 @@ class Logger {
 }
 
 const init = (service, meta = {}) => {
-  return new Logger(service, meta)
-}
+  return new Logger(service, meta);
+};
 
 const logger = {
   init,
-}
+};
 
 export { logger };

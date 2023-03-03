@@ -1,10 +1,8 @@
-import { server } from './adapters/http_server/server';
-import { configure } from './configure';
-import { logger } from './infrastructure/logger';
+import { adapters } from './adapters';
+import { configure } from './application/configure';
 
 const init = () => {
-  const backendLogger = logger.init('backend');
-  configure(backendLogger, server)
+  configure(adapters);
 };
 
 export { init };
